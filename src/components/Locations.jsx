@@ -24,7 +24,7 @@ export default function Locations() {
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-3xl sm:text-4xl font-semibold text-gray-900"
+          className="text-3xl sm:text-4xl font-semibold text-white"
         >
           Our Locations
         </motion.h2>
@@ -36,14 +36,14 @@ export default function Locations() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
-              transition={{ delay: 0.05 * i }}
-              className="rounded-2xl border bg-white p-6"
+              transition={{ delay: 0.06 * i, ease: "easeOut" }}
+              className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-6"
             >
               <div className="flex items-start gap-3">
-                <MapPin className="w-6 h-6 text-indigo-600 shrink-0" />
+                <MapPin className="w-6 h-6 text-fuchsia-300 shrink-0" />
                 <div>
-                  <div className="font-medium text-gray-900">{b.name}</div>
-                  <div className="text-sm text-gray-700 mt-1">{b.address}</div>
+                  <div className="font-medium text-slate-100">{b.name}</div>
+                  <div className="text-sm text-slate-300 mt-1">{b.address}</div>
                 </div>
               </div>
             </motion.div>

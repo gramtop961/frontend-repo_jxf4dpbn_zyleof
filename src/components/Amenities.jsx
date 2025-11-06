@@ -20,7 +20,7 @@ export default function Amenities() {
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-3xl sm:text-4xl font-semibold text-gray-900"
+          className="text-3xl sm:text-4xl font-semibold text-white"
         >
           Amenities
         </motion.h2>
@@ -33,11 +33,11 @@ export default function Amenities() {
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.4 }}
-                transition={{ delay: 0.05 * i }}
-                className="rounded-2xl border bg-white p-6 hover:shadow-md transition-shadow"
+                transition={{ delay: 0.05 * i, ease: "easeOut" }}
+                className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-6 hover:shadow-xl hover:shadow-indigo-500/10 transition"
               >
-                <Icon className="w-6 h-6 text-indigo-600" />
-                <div className="mt-3 font-medium text-gray-900">{it.label}</div>
+                <Icon className="w-6 h-6 text-indigo-300" />
+                <div className="mt-3 font-medium text-slate-100">{it.label}</div>
               </motion.div>
             );
           })}

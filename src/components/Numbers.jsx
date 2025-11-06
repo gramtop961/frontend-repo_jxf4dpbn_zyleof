@@ -13,7 +13,7 @@ export default function Numbers() {
     els.forEach((el) => {
       const target = Number(el.getAttribute("data-count"));
       let start = 0;
-      const duration = 1200;
+      const duration = 1400;
       const startTime = performance.now();
 
       const step = (now) => {
@@ -29,7 +29,7 @@ export default function Numbers() {
   }, []);
 
   return (
-    <section className="py-14 sm:py-20 bg-gray-50">
+    <section className="py-16 sm:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
           {stats.map((s, i) => (
@@ -38,11 +38,11 @@ export default function Numbers() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
-              transition={{ delay: 0.05 * i, duration: 0.5 }}
-              className="bg-white rounded-2xl shadow-sm p-8 text-center"
+              transition={{ delay: 0.06 * i, duration: 0.55, ease: "easeOut" }}
+              className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-8 text-center"
             >
-              <div className="text-4xl font-semibold text-gray-900" data-count={s.value}>0</div>
-              <div className="mt-2 text-sm text-gray-600">{s.label}</div>
+              <div className="text-4xl font-semibold text-white" data-count={s.value}>0</div>
+              <div className="mt-2 text-sm text-slate-300">{s.label}</div>
             </motion.div>
           ))}
         </div>

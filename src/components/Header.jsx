@@ -15,7 +15,7 @@ export default function Header({ onJoin }) {
   return (
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-all ${
-        scrolled ? "backdrop-blur bg-white/70 shadow" : "bg-transparent"
+        scrolled ? "backdrop-blur-md bg-slate-900/60 shadow-inner" : "bg-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -27,8 +27,8 @@ export default function Header({ onJoin }) {
             transition={{ duration: 0.5 }}
             className="flex items-center gap-2"
           >
-            <Library className={`w-6 h-6 text-indigo-600 transition-transform ${scrolled ? "scale-95" : "scale-100"}`} />
-            <span className="font-semibold text-lg tracking-tight">Aurora Library</span>
+            <Library className={`w-6 h-6 text-indigo-400 transition-transform ${scrolled ? "scale-95" : "scale-100"}`} />
+            <span className="font-semibold text-lg tracking-tight text-white">Aurora Library</span>
           </motion.a>
 
           <nav className="hidden md:flex items-center gap-8">
@@ -42,22 +42,22 @@ export default function Header({ onJoin }) {
                 href={href}
                 initial={{ opacity: 0, y: -6 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 * (i + 1) }}
-                className="text-sm text-gray-700 hover:text-gray-900"
+                transition={{ delay: 0.08 * (i + 1) }}
+                className="text-sm text-slate-300 hover:text-white"
               >
                 {label}
               </motion.a>
             ))}
             <button
               onClick={onJoin}
-              className="inline-flex items-center rounded-full bg-indigo-600 text-white text-sm font-medium px-4 py-2 hover:bg-indigo-700 shadow"
+              className="inline-flex items-center rounded-full bg-gradient-to-r from-indigo-500 via-fuchsia-500 to-cyan-400 text-white text-sm font-medium px-4 py-2 shadow-lg shadow-fuchsia-500/20"
             >
               Join Now
             </button>
           </nav>
 
           <button
-            className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100"
+            className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-slate-200 hover:bg-white/10"
             onClick={() => setOpen((v) => !v)}
             aria-label="Toggle menu"
           >
@@ -67,18 +67,18 @@ export default function Header({ onJoin }) {
       </div>
 
       {open && (
-        <div className="md:hidden border-t bg-white">
+        <div className="md:hidden border-t border-white/10 bg-slate-900/80 backdrop-blur">
           <div className="px-4 py-3 space-y-2">
-            <a href="#amenities" className="block py-2">Amenities</a>
-            <a href="#pricing" className="block py-2">Pricing</a>
-            <a href="#locations" className="block py-2">Locations</a>
-            <button onClick={onJoin} className="inline-flex items-center rounded-full bg-indigo-600 text-white text-sm font-medium px-4 py-2 hover:bg-indigo-700">
+            <a href="#amenities" className="block py-2 text-slate-100">Amenities</a>
+            <a href="#pricing" className="block py-2 text-slate-100">Pricing</a>
+            <a href="#locations" className="block py-2 text-slate-100">Locations</a>
+            <button onClick={onJoin} className="inline-flex items-center rounded-full bg-gradient-to-r from-indigo-500 via-fuchsia-500 to-cyan-400 text-white text-sm font-medium px-4 py-2">
               Join Now
             </button>
           </div>
         </div>
       )}
-      <div className="h-0.5 bg-gradient-to-r from-indigo-500 via-fuchsia-500 to-emerald-400"></div>
+      <div className="h-0.5 bg-gradient-to-r from-indigo-500 via-fuchsia-500 to-cyan-400"></div>
     </header>
   );
 }
