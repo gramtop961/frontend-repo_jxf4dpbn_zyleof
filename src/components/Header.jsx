@@ -1,65 +1,82 @@
-import { useEffect, useRef } from 'react'
-import { motion } from 'framer-motion'
-import { Library, Search, Phone, Menu } from 'lucide-react'
-import { gsap } from 'gsap'
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Library, Menu } from "lucide-react";
 
 export default function Header() {
-  const barRef = useRef(null)
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (!barRef.current) return
-    gsap.fromTo(
-      barRef.current,
-      { width: 0, opacity: 0 },
-      { width: '100%', opacity: 1, duration: 1.2, ease: 'power3.out' }
-    )
-  }, [])
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/60 bg-white/70 border-b border-slate-200/60">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <motion.a
-          href="#"
-          className="flex items-center gap-3"
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 text-white shadow-lg shadow-indigo-500/20">
-            <Library size={22} />
-          </span>
-          <div className="leading-tight">
-            <p className="font-semibold text-slate-900">Aurora Library</p>
-            <p className="text-xs text-slate-500">Study • Work • Create</p>
-          </div>
-        </motion.a>
-
-        <nav className="hidden md:flex items-center gap-8 text-sm text-slate-600">
-          <a className="hover:text-slate-900" href="#amenities">Amenities</a>
-          <a className="hover:text-slate-900" href="#pricing">Pricing</a>
-          <a className="hover:text-slate-900" href="#locations">Locations</a>
-          <a className="hover:text-slate-900" href="#contact">Contact</a>
-        </nav>
-
-        <div className="hidden md:flex items-center gap-3">
-          <button className="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm bg-white border border-slate-200 hover:border-slate-300 text-slate-700 shadow-sm">
-            <Search size={16} />
-            Search
-          </button>
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 shadow-lg shadow-slate-900/20"
+    <header className={`fixed top-0 inset-x-0 z-50 transition-all ${
+      scrolled ? "backdrop-blur bg-white/70 shadow" : "bg-transparent"
+    }`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between">
+          <motion.a
+            href="#"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="flex items-center gap-2"
           >
-            <Phone size={16} />
-            Call Us
-          </a>
-        </div>
+            <Library className="w-6 h-6 text-indigo-600" />
+            <span className="font-semibold text-lg tracking-tight">Aurora Library</span>
+          </motion.a>
 
-        <button className="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-xl border border-slate-200 text-slate-700">
-          <Menu size={18} />
-        </button>
+          <nav className="hidden md:flex items-center gap-8">
+            {[
+              ["Amenities", "#amenities"],
+              ["Pricing", "#pricing"],
+              ["Locations", "#locations"],
+            ].map(([label, href], i) => (
+              <motion.a
+                key={label}
+                href={href}
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 * (i + 1) }}
+                className="text-sm text-gray-700 hover:text-gray-900"
+              >
+                {label}
+              </motion.a>
+            ))}
+            <a
+              href="#pricing"
+              className="inline-flex items-center rounded-full bg-indigo-600 text-white text-sm font-medium px-4 py-2 hover:bg-indigo-700 shadow"
+            >
+              Join Now
+            </a>
+          </nav>
+
+          <button
+            className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100"
+            onClick={() => setOpen((v) => !v)}
+            aria-label="Toggle menu"
+          >
+            <Menu className="w-6 h-6" />
+          </button>
+        </div>
       </div>
-      <div ref={barRef} className="h-[2px] bg-gradient-to-r from-indigo-500 via-sky-500 to-emerald-500" />
+
+      {open && (
+        <div className="md:hidden border-t bg-white">
+          <div className="px-4 py-3 space-y-2">
+            <a href="#amenities" className="block py-2">Amenities</a>
+            <a href="#pricing" className="block py-2">Pricing</a>
+            <a href="#locations" className="block py-2">Locations</a>
+            <a href="#pricing" className="inline-flex items-center rounded-full bg-indigo-600 text-white text-sm font-medium px-4 py-2 hover:bg-indigo-700">
+              Join Now
+            </a>
+          </div>
+        </div>
+      )}
+      <div className="h-0.5 bg-gradient-to-r from-indigo-500 via-fuchsia-500 to-emerald-400"></div>
     </header>
-  )
+  );
 }

@@ -1,49 +1,52 @@
-import { useEffect, useRef } from 'react'
-import { motion, useAnimation } from 'framer-motion'
-import { gsap } from 'gsap'
+import { useEffect } from "react";
+import { motion } from "framer-motion";
 
-function useCountUp(target = 1000, duration = 1.6) {
-  const ref = useRef(null)
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const obj = { val: 0 }
-    const tween = gsap.to(obj, {
-      val: target,
-      duration,
-      ease: 'power3.out',
-      onUpdate: () => {
-        el.textContent = Math.floor(obj.val).toLocaleString()
-      },
-    })
-    return () => tween.kill()
-  }, [target, duration])
-  return ref
-}
+const stats = [
+  { label: "Libraries", value: 12 },
+  { label: "Active Subscriptions", value: 2400 },
+  { label: "Years of Service", value: 8 },
+];
 
 export default function Numbers() {
-  const ref1 = useCountUp(3, 1.2)
-  const ref2 = useCountUp(1200, 1.6)
-  const ref3 = useCountUp(7, 1.2)
-  const controls = useAnimation()
-
   useEffect(() => {
-    controls.start({ opacity: 1, y: 0, transition: { duration: 0.6 } })
-  }, [controls])
+    const els = document.querySelectorAll("[data-count]");
+    els.forEach((el) => {
+      const target = Number(el.getAttribute("data-count"));
+      let start = 0;
+      const duration = 1200;
+      const startTime = performance.now();
+
+      const step = (now) => {
+        const progress = Math.min((now - startTime) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = Math.floor(start + (target - start) * eased);
+        el.textContent = current.toLocaleString();
+        if (progress < 1) requestAnimationFrame(step);
+      };
+
+      requestAnimationFrame(step);
+    });
+  }, []);
 
   return (
-    <section className="py-16 md:py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-3 gap-6">
-        {[{ label: 'Libraries', ref: ref1 }, { label: 'Subscriptions', ref: ref2 }, { label: 'Years of Experience', ref: ref3 }].map((item) => (
-          <motion.div key={item.label} initial={{ opacity: 0, y: 10 }} animate={controls} className="rounded-2xl p-8 ring-1 ring-slate-200 bg-gradient-to-br from-slate-50 to-white shadow-sm">
-            <div className="text-4xl font-semibold text-slate-900">
-              <span ref={item.ref}>0</span>
-              {item.label === 'Subscriptions' ? '+' : ''}
-            </div>
-            <div className="mt-1 text-sm text-slate-600">{item.label}</div>
-          </motion.div>
-        ))}
+    <section className="py-14 sm:py-20 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+          {stats.map((s, i) => (
+            <motion.div
+              key={s.label}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ delay: 0.05 * i, duration: 0.5 }}
+              className="bg-white rounded-2xl shadow-sm p-8 text-center"
+            >
+              <div className="text-4xl font-semibold text-gray-900" data-count={s.value}>0</div>
+              <div className="mt-2 text-sm text-gray-600">{s.label}</div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
-  )
+  );
 }

@@ -1,77 +1,70 @@
-import { motion } from 'framer-motion'
-import { Check } from 'lucide-react'
+import { motion } from "framer-motion";
 
 const tiers = [
   {
-    name: 'Day Pass',
-    price: '₹199',
-    desc: 'Perfect for quick sprints and exam prep days.',
-    features: ['All amenities', '8am – 8pm access', 'High-speed WiFi', 'Quiet zones'],
+    name: "Day Pass",
+    price: "$5",
+    perks: ["All amenities", "10am – 8pm", "1 device Wi‑Fi"],
+    featured: false,
   },
   {
-    name: 'Monthly',
-    price: '₹1499',
-    highlighted: true,
-    desc: 'Best for regulars who love a dedicated space.',
-    features: ['24/6 access', 'Reserved desk option', 'Complimentary beverages', 'Priority support'],
+    name: "Monthly",
+    price: "$29",
+    perks: ["24/7 access", "Reserved desk", "Unlimited Wi‑Fi"],
+    featured: true,
   },
   {
-    name: 'Quarterly',
-    price: '₹3999',
-    desc: 'Commit long-term and save more.',
-    features: ['24/6 access', 'Locker facility', 'Guest passes', 'Workshop invites'],
+    name: "Quarterly",
+    price: "$79",
+    perks: ["Priority seating", "Locker", "Guest passes"],
+    featured: false,
   },
-]
+];
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="py-16 md:py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center max-w-2xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-semibold text-slate-900">Simple, transparent pricing</h2>
-          <p className="mt-2 text-slate-600">Choose a plan that fits the way you study or work.</p>
-        </div>
+    <section id="pricing" className="py-16 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.h2
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-3xl sm:text-4xl font-semibold text-gray-900"
+        >
+          Pricing
+        </motion.h2>
 
-        <div className="mt-10 grid md:grid-cols-3 gap-6">
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
           {tiers.map((t, i) => (
             <motion.div
               key={t.name}
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.05 }}
-              className={`relative rounded-3xl p-6 ring-1 ring-slate-200 bg-gradient-to-br from-slate-50 to-white shadow-sm ${
-                t.highlighted ? 'border-2 border-indigo-500 ring-indigo-200 shadow-indigo-500/10' : ''
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ delay: 0.05 * i }}
+              className={`rounded-2xl p-6 border bg-white ${
+                t.featured ? "ring-2 ring-indigo-600 shadow-md" : ""
               }`}
             >
-              {t.highlighted && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-medium bg-indigo-600 text-white px-2.5 py-0.5 rounded-full shadow">Popular</span>
-              )}
-              <div className="text-sm text-slate-500">{t.name}</div>
-              <div className="mt-1 text-3xl font-semibold text-slate-900">{t.price}</div>
-              <p className="mt-2 text-sm text-slate-600">{t.desc}</p>
-              <ul className="mt-6 space-y-2">
-                {t.features.map((f) => (
-                  <li key={f} className="flex items-start gap-2 text-sm text-slate-700">
-                    <span className="mt-0.5 text-emerald-600"><Check size={16} /></span>
-                    {f}
-                  </li>
+              <div className="flex items-baseline justify-between">
+                <div className="text-lg font-medium text-gray-900">{t.name}</div>
+                <div className="text-2xl font-semibold text-indigo-600">{t.price}</div>
+              </div>
+              <ul className="mt-4 space-y-2 text-sm text-gray-700">
+                {t.perks.map((p) => (
+                  <li key={p}>• {p}</li>
                 ))}
               </ul>
-              <motion.a
-                href="#contact"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className={`mt-6 inline-flex w-full items-center justify-center rounded-xl px-4 py-2.5 text-sm font-medium shadow ${
-                  t.highlighted ? 'bg-slate-900 text-white' : 'bg-white border border-slate-200 text-slate-800'
-                }`}
+              <a
+                href="#"
+                className="mt-6 inline-flex w-full justify-center rounded-full bg-indigo-600 text-white text-sm font-medium px-4 py-2 hover:bg-indigo-700"
               >
                 Choose {t.name}
-              </motion.a>
+              </a>
             </motion.div>
           ))}
         </div>
       </div>
     </section>
-  )
+  );
 }
