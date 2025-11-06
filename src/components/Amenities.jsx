@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Wifi, Coffee, Lamp, Fan, CupSoda, Plug, Chair, BookOpen } from "lucide-react";
+import { Wifi, Coffee, Lamp, Fan, CupSoda, Plug, Armchair, BookOpen } from "lucide-react";
 
 const items = [
   { icon: Wifi, label: "High-speed Wi‑Fi" },
@@ -7,7 +7,7 @@ const items = [
   { icon: Lamp, label: "Ample Lighting" },
   { icon: Fan, label: "A/C & Fans" },
   { icon: Plug, label: "Every Seat Has Power" },
-  { icon: Chair, label: "Ergonomic Chairs" },
+  { icon: Armchair, label: "Comfortable Seating" },
   { icon: CupSoda, label: "Snacks & Water" },
   { icon: BookOpen, label: "Quiet Study Zones" },
 ];
