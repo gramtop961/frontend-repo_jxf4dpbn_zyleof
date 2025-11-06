@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Library, Menu } from "lucide-react";
 
-export default function Header() {
+export default function Header({ onJoin }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -13,11 +13,13 @@ export default function Header() {
   }, []);
 
   return (
-    <header className={`fixed top-0 inset-x-0 z-50 transition-all ${
-      scrolled ? "backdrop-blur bg-white/70 shadow" : "bg-transparent"
-    }`}>
+    <header
+      className={`fixed top-0 inset-x-0 z-50 transition-all ${
+        scrolled ? "backdrop-blur bg-white/70 shadow" : "bg-transparent"
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
+        <div className={`flex items-center justify-between transition-all ${scrolled ? "h-14" : "h-16"}`}>
           <motion.a
             href="#"
             initial={{ opacity: 0, y: -10 }}
@@ -25,7 +27,7 @@ export default function Header() {
             transition={{ duration: 0.5 }}
             className="flex items-center gap-2"
           >
-            <Library className="w-6 h-6 text-indigo-600" />
+            <Library className={`w-6 h-6 text-indigo-600 transition-transform ${scrolled ? "scale-95" : "scale-100"}`} />
             <span className="font-semibold text-lg tracking-tight">Aurora Library</span>
           </motion.a>
 
@@ -46,12 +48,12 @@ export default function Header() {
                 {label}
               </motion.a>
             ))}
-            <a
-              href="#pricing"
+            <button
+              onClick={onJoin}
               className="inline-flex items-center rounded-full bg-indigo-600 text-white text-sm font-medium px-4 py-2 hover:bg-indigo-700 shadow"
             >
               Join Now
-            </a>
+            </button>
           </nav>
 
           <button
@@ -70,9 +72,9 @@ export default function Header() {
             <a href="#amenities" className="block py-2">Amenities</a>
             <a href="#pricing" className="block py-2">Pricing</a>
             <a href="#locations" className="block py-2">Locations</a>
-            <a href="#pricing" className="inline-flex items-center rounded-full bg-indigo-600 text-white text-sm font-medium px-4 py-2 hover:bg-indigo-700">
+            <button onClick={onJoin} className="inline-flex items-center rounded-full bg-indigo-600 text-white text-sm font-medium px-4 py-2 hover:bg-indigo-700">
               Join Now
-            </a>
+            </button>
           </div>
         </div>
       )}
